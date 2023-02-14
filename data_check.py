@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
 
-df = pd.read_csv('Multiple-Linear-Regression/50_Startups.csv')
+df = pd.read_csv('50_Startups.csv')
 
 states = pd.get_dummies(df['State'], drop_first=True)
 x = df.drop(['State'], axis=1)
@@ -21,8 +21,7 @@ LR.fit(x_train, y_train)
 
 y_prediction = LR.predict(x_test)
 
-
-score= r2_score(y_test, y_prediction)
+score = r2_score(y_test, y_prediction)
 
 print('R2 Score: ', score)
 print('MSE: ', mean_squared_error(y_test, y_prediction))
