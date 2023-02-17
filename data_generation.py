@@ -29,18 +29,9 @@ if __name__ == '__main__':
             has_bachelors_degree[i],
             is_referral[i],
         ])
-        if true_count == 7:
-            prob = 0.8
-        elif true_count == 6:
-            prob = 0.7
-        elif true_count == 5:
-            prob = 0.65
-        elif true_count == 4:
-            prob = 0.55
-        elif true_count > 0:
-            prob = 0.6
-        else:
-            prob = 0.4
+
+        prob = 0.2 - 0.0025 * true_count
+
         hired.append(random.choices([True, False], weights=[prob, 1-prob])[0])
 
 
@@ -63,9 +54,6 @@ if __name__ == '__main__':
     # print true count of hired
     print(df['Hired'].value_counts())
     print()
-
-    # print how many people are hired with technical skill
-    print(df[df['Has Technical Skill Fit'] == True]['Hired'].value_counts())
 
 
     df.to_csv('table.csv', index=False)
