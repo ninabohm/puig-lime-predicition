@@ -1,35 +1,42 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
-from sklearn.metrics import mean_squared_error
-import seaborn as sns
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 df = pd.read_csv('table.csv')
 
-# understand if gender has impact on whether person gets hired (shouldnt)
-# understand if has more than 2 years of experience has impact on whether person gets hired (should)
-# understand if has phd has impact on whether person gets hired (should)
-# understand if gender has impact on whether phd (can)
-
-
-x = df[['Is male']]
+X = df[[
+        'Has Technical Skill Fit',
+        'Has more than 2 Years of Experience',
+        'Has Interview Score >70/100',
+        'Has PhD Degree',
+        'Has Masters Degree',
+        'Has Bachelors Degree',
+        'Is Referral',
+        'Is Person of Color',
+        'Has German Name',
+        'Is younger than 40',
+        'Is male'
+    ]]
 
 y = df['Hired']
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.8, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
+# write corr into file
+corr = df.corr()
+corr.to_csv('corr.csv')
 
-LR = LinearRegression()
+logreg = LogisticRegression()
 
-LR.fit(x_train, y_train)
+logreg.fit(X_train, y_train)
 
-y_prediction = LR.predict(x_test)
+coef_df = pd.DataFrame({'feature': X.columns, 'coef_value': logreg.coef_[0]})
+print(coef_df)
 
-# print('prediction: ', y_prediction)
+y_prediction = logreg.predict(X_test)
 
-score = r2_score(y_test, y_prediction)
-
-print('R2 Score: ', score)
-print('MSE: ', mean_squared_error(y_test, y_prediction))
-print('RMSE: ', mean_squared_error(y_test, y_prediction, squared=False))
+print('Accuracy: ', accuracy_score(y_test, y_prediction))
+print('Precision: ', precision_score(y_test, y_prediction))
+print('Recall: ', recall_score(y_test, y_prediction))
+print('F1 score: ', f1_score(y_test, y_prediction))

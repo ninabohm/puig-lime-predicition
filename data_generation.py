@@ -57,16 +57,9 @@ if __name__ == '__main__':
     # print true count of hired
     print(df['Hired'].value_counts())
     print()
-    # print true count of technical skill
-    print(df['Has Technical Skill Fit'].value_counts())
-    print()
-    # print true count of more than 2 years of experience
-    print(df['Has more than 2 Years of Experience'].value_counts())
-    print()
-    # print true count of phd degree
-    print(df['Has PhD Degree'].value_counts())
-    print()
 
+    # print how many people are hired with technical skill
+    print(df[df['Has Technical Skill Fit'] == True]['Hired'].value_counts())
 
 
     df.to_csv('table.csv', index=False)
