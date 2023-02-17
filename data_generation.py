@@ -31,6 +31,12 @@ if __name__ == '__main__':
         ])
         if true_count == 7:
             prob = 0.8
+        elif true_count == 6:
+            prob = 0.7
+        elif true_count == 5:
+            prob = 0.65
+        elif true_count == 4:
+            prob = 0.55
         elif true_count > 0:
             prob = 0.6
         else:
