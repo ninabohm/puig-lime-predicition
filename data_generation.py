@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-
 random.seed(1)
 
 has_technical_skill_fit = [random.choice([True, False]) for i in range(1000)]
@@ -18,7 +17,6 @@ is_person_of_color = [random.choice([True, False]) for i in range(1000)]
 has_german_name = [random.choice([True, False]) for i in range(1000)]
 is_younger_than_40 = [random.choice([True, False]) for i in range(1000)]
 is_male = [random.choice([True, False]) for i in range(1000)]
-
 
 hired = []
 for i in range(1000):
@@ -34,8 +32,7 @@ for i in range(1000):
 
     prob = 0.5 - 0.05 * true_count
 
-    hired.append(random.choices([True, False], weights=[prob, 1-prob])[0])
-
+    hired.append(random.choices([True, False], weights=[prob, 1 - prob])[0])
 
 df = pd.DataFrame({
     'Has Technical Skill Fit': has_technical_skill_fit,
@@ -54,20 +51,6 @@ df = pd.DataFrame({
 })
 
 df.to_csv('table.csv', index=False)
-
-# print true count of hired
-# print(df['Hired'].value_counts())
-# print()
-
-# # print count of male and hired
-# print(df.loc[df['Is male'], 'Hired'].value_counts())
-# print()
-#
-# print(df['Is male'].value_counts())
-
-# print count of phd and hired
-# print(df.loc[df['Has PhD Degree'], 'Hired'].value_counts())
-
 
 X = df[[
     'Has Technical Skill Fit',
