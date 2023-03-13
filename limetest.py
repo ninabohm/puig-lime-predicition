@@ -7,19 +7,17 @@ Original file is located at
     https://colab.research.google.com/drive/13XX72sJTC9nJUTXYxJhiedPVsPgBlzYW
 """
 
-!pip install lime 
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-
-
+import lime
+from lime import lime_tabular
 
 url = 'https://raw.githubusercontent.com/ninabohm/puig-lime-predicition/main/table.csv?token=GHSAT0AAAAAAB7JKAVEAA3GUQQJRP65QX3QZAAVRDA'
 
-data=pd.read_csv(url)
+data = pd.read_csv(url)
 
 print(data.shape)
 
@@ -32,17 +30,17 @@ X = data.iloc[0:999, 0:11].astype(int)
 print(X.shape)
 X.head()
 
-RANDOM_STATE=5
+RANDOM_STATE = 5
 train_X, val_X, train_y, val_y, = train_test_split(X, y, test_size=0.25, stratify=y, random_state=RANDOM_STATE)
 my_model = RandomForestClassifier(max_depth=4, random_state=RANDOM_STATE).fit(train_X, train_y)
-num = 1 #we will explain this sample
-test_sample = val_X.iloc[num,:]
+num = 1  # we will explain this sample
+test_sample = val_X.iloc[num, :]
 
 imp_df = pd.DataFrame({'feature': train_X.columns.values, 'importance': my_model.feature_importances_})
 
-#Reorder by importance
+# Reorder by importance
 ordered_df = imp_df.sort_values(by='importance')
-imp_range=range(1, len(imp_df.index)+1)
+imp_range = range(1, len(imp_df.index) + 1)
 
 height = ordered_df['importance']
 bars = ordered_df['feature']
@@ -62,9 +60,6 @@ out = my_model.predict_proba(val_X)
 plt.hist(out)
 print("Random Forest Predicition for sample", num, '=', out[num])
 print('Actual outcome = ', val_y.iloc[num])
-
-import lime 
-from lime import lime_tabular
 
 lime_explainer = lime_tabular.LimeTabularExplainer(
     training_data=train_X.values,
@@ -107,6 +102,5 @@ for label in desired_labels:
     for label in yticklabels:
         if desired_label in label.get_text():
             label.set_text(desired_label)
-
 
 plt.gca().set_yticklabels(yticklabels)
