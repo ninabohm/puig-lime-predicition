@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 
-df = pd.read_csv('survey_results.csv')
+df = pd.read_csv('outputs/survey_results.csv')
 
 bias_column = 'How much bias do you feel the outcome has based on the provided explanation?'
 gender_bias_column = 'Based on the explanation, to what extent do you believe that the suggestion was influenced by factors related to gender?'

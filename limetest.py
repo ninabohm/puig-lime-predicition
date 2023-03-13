@@ -15,7 +15,7 @@ from sklearn.ensemble import RandomForestClassifier
 import lime
 from lime import lime_tabular
 
-url = 'https://raw.githubusercontent.com/ninabohm/puig-lime-predicition/main/table.csv?token=GHSAT0AAAAAAB7JKAVEAA3GUQQJRP65QX3QZAAVRDA'
+url = 'RAW_CSV_URL'
 
 data = pd.read_csv(url)
 
